@@ -1,41 +1,15 @@
 package TicTacToe;
 
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
-
-import static TicTacToe.Board.*;
+import static TicTacToe.UserDialogs.getName;
+import static TicTacToe.UserDialogs.getRounds;
 
 public class Runner {
-    private static Scanner input = new Scanner(System.in);
-    static char[][] board = {
-            {' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' '},
-            {'-', '-', '-', '+', '-', '-', '-', '+', '-', '-', '-'},
-            {' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' '},
-            {'-', '-', '-', '+', '-', '-', '-', '+', '-', '-', '-'},
-            {' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' '}};
 
-    public static void run() {
+    public void run() throws Exception {
 
-//        getName();
-//        getRounds();
-        showExampleBoard();
-        while (true) {
-            try {
-                System.out.println("Enter number 1 - 9: ");
-                int playerPos = input.nextInt();
-                placePiece(board, playerPos, "player");
-
-                Random rnd = new Random();
-                int pcPos = rnd.nextInt(9) + 1;
-                placePiece(board, pcPos, "pc");
-
-                printBoard(board);
-
-            } catch (InputMismatchException e) {
-                System.out.println("Wrong input.");
-
-            }
-        }
+        String name = getName();
+        int rounds = getRounds();
+        Game game = new Game(name, rounds);
+        game.play();
     }
 }

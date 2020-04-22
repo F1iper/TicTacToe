@@ -1,55 +1,22 @@
 package TicTacToe;
 
-import java.util.Scanner;
-
 public class Board {
-    static char[][] board = {
+    public static final String PLAYER = "player";
+    public static final String PC = "pc";
+    private char[][] board = {
             {' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' '},
             {'-', '-', '-', '+', '-', '-', '-', '+', '-', '-', '-'},
             {' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' '},
             {'-', '-', '-', '+', '-', '-', '-', '+', '-', '-', '-'},
             {' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' '}};
 
-    public static void printBoard(char[][] board) {
-        for (char[] row : board) {
-            for (char col : row) {
-                System.out.print(col + "");
-            }
-            System.out.println();
-        }
-    }
-
-    public static void showExampleBoard() {
-        System.out.println("Take a look at sample board: ");
-        char[][] exampleBoard = {
-                {' ', '1', ' ', '|', ' ', '2', ' ', '|', ' ', '3', ' '},
-                {'-', '-', '-', '+', '-', '-', '-', '+', '-', '-', '-'},
-                {' ', '4', ' ', '|', ' ', '5', ' ', '|', ' ', '6', ' '},
-                {'-', '-', '-', '+', '-', '-', '-', '+', '-', '-', '-'},
-                {' ', '7', ' ', '|', ' ', '8', ' ', '|', ' ', '9', ' '}};
-        for (int i = 0; i < exampleBoard.length; i++) {
-            for (int j = 0; j < exampleBoard[i].length; j++) {
-                System.out.print(exampleBoard[i][j] + "");
-            }
-            System.out.println();
-        }
-    }
-
-//    public static char[][] initializeBoard(char[][] board) {
-//        for (int i = 0; i < board.length; i++) {
-//            for (int j = 0; j < board[i].length; j++) {
-//                System.out.print(board[i][j] + "");
-//            }
-//            System.out.println();
-//        }
-//        return board;
-//    }
-
-    public static void placePiece(char[][] board, int pos, String user) {
+    public boolean placePiece(int pos, String user) throws Exception {
         char symbol = ' ';
-        if(user.equals("player"))
+        if (fieldIsNotEmpty(pos))
+            return false;
+        if (user.equals(PLAYER))
             symbol = 'x';
-        else if(user.equals("pc"))
+        else if (user.equals(PC))
             symbol = 'o';
 
         switch (pos) {
@@ -81,7 +48,19 @@ public class Board {
                 board[4][9] = symbol;
                 break;
             default:
-                System.out.println("Wrong input, try again.");
+                throw new Exception("Unknown player");
         }
+        return true;
+    }
+
+    private boolean fieldIsNotEmpty(int pos) {
+        int row = (pos - 1) / 3;
+        int col = pos % 3 - 1;
+
+        return board[row * 2][col * 4 + 1] != ' ';
+    }
+
+    public char[][] getBoard() {
+        return board;
     }
 }
