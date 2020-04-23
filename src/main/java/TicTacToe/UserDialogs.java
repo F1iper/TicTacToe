@@ -1,5 +1,7 @@
 package TicTacToe;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class UserDialogs {
@@ -24,7 +26,7 @@ public class UserDialogs {
         }
     }
 
-    static int getPosition() {
+    public static int getPosition() {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter number 1 - 9: ");
         return input.nextInt();
@@ -73,5 +75,20 @@ public class UserDialogs {
 
     public static void displayWrongNumber() {
         System.out.println("You have to choose empty field");
+    }
+
+    public static boolean gameOver(char[][] board, char symbol) {
+
+        if (board[0][1] != ' ' && board[0][1] == board[0][5] && board[0][5] == board[0][9]) return true;
+        else if (board[2][1] != ' ' && board[2][1] == board[2][5] && board[2][5] == board[2][9]) return true;
+        else if (board[4][1] == 'x' && board[4][5] == 'x' && board[4][9] == 'x') return true;
+
+        else if (board[0][1] == 'x' && board[2][1] == 'x' && board[4][1] == 'x') return true;
+        else if (board[0][5] == 'x' && board[2][5] == 'x' && board[4][5] == 'x') return true;
+        else if (board[0][9] == 'x' && board[2][9] == 'x' && board[4][9] == 'x') return true;
+
+        else if (board[0][1] == 'x' && board[2][5] == 'x' && board[4][9] == 'x') return true;
+        else if (board[4][1] == 'x' && board[2][5] == 'x' && board[0][9] == 'x') return true;
+        return false;
     }
 }

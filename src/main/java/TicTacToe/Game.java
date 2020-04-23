@@ -23,13 +23,16 @@ public class Game {
                     break;
                 UserDialogs.displayWrongNumber();
             }
-            // tutaj
+            //tutaj
+            UserDialogs.gameOver(board.getBoard());
             while (true) {
                 int pcPos = rnd.nextInt(9) + 1;
-                if(board.placePiece(pcPos, Board.PC))
+                if (board.placePiece(pcPos, Board.PC)) {
                     break;
+                }
             }
             // tutaj
+            UserDialogs.gameOver(board.getBoard());
             UserDialogs.printBoard(board.getBoard());
         }
     }

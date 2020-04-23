@@ -57,7 +57,12 @@ public class Board {
         int row = (pos - 1) / 3;
         int col = pos % 3 - 1;
 
-        return board[row * 2][col * 4 + 1] != ' ';
+        if (pos == 3 || pos == 6)
+            return board[row * 2][col * (-9)] != ' ';
+        else if (pos == 9)
+            return board[row * 2][col * (-4) + 1] != ' ';
+        else
+            return board[row * 2][col * 4 + 1] != ' ';
     }
 
     public char[][] getBoard() {
