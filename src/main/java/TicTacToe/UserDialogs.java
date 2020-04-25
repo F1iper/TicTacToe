@@ -89,32 +89,32 @@ public class UserDialogs {
         boolean diagonal1 = (board[0][1] != ' ' && board[0][1] == board[2][5] && board[2][5] == board[4][9]);
         boolean diagonal2 = (board[4][1] != ' ' && board[4][1] == board[2][5] && board[2][5] == board[0][9]);
 
-        return topRow || middleRow || bottomRow || leftColumn || middleColumn || rightColumn || diagonal1 || diagonal2;
+        if (topRow || middleRow || bottomRow || leftColumn || middleColumn || rightColumn || diagonal1 || diagonal2)
+            return true;
+        else
+            return false;
     }
 
-    public static String displayWinner(String user) {
+    public static void displayWinner(String user) {
         if (user.equals(Board.PLAYER))
-            return "You win the game!";
+            System.out.println("You win the game!");
         else if (user.equals(Board.PC))
-            return "PC is the winner!";
+            System.out.println("PC win the game!");
         else
-            return "";
+            System.out.println("It's a tie!");
     }
 
     public static boolean restartGame() {
-        while (true) {
-            try {
-                System.out.println("Restart game ? Y/N");
-                Scanner input = new Scanner(System.in);
-                String choice = input.nextLine();
-                if (choice.equalsIgnoreCase("y")) {
-                    return true;
-                } else if (choice.equalsIgnoreCase("n")) {
-                    return false;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Wrong input, try again.");
-            }
+        try {
+            System.out.println("Restart game ?  Y/N");
+            Scanner input = new Scanner(System.in);
+            String result = input.nextLine();
+            if (result.equalsIgnoreCase("y")) return true;
+            else if (result.equalsIgnoreCase("n")) return false;
+        } catch (Exception e) {
+            System.out.println("Wrong input");
+
         }
+        return false;
     }
 }
