@@ -2,6 +2,8 @@ package TicTacToe;
 
 import java.util.Random;
 
+import static TicTacToe.UserDialogs.gameOver;
+
 public class Game {
     private final String name;
     private final int rounds;
@@ -23,17 +25,23 @@ public class Game {
                     break;
                 UserDialogs.displayWrongNumber();
             }
-            //tutaj
-            UserDialogs.gameOver(board.getBoard());
             while (true) {
-                int pcPos = rnd.nextInt(9) + 1;
-                if (board.placePiece(pcPos, Board.PC)) {
-                    break;
+                if (gameOver(board.getBoard()))
+                    UserDialogs.displayWinner(Board.PLAYER);
+                //tutaj
+                UserDialogs.restartGame();
+
+                while (true) {
+                    int pcPos = rnd.nextInt(9) + 1;
+                    if (board.placePiece(pcPos, Board.PC)) {
+                        break;
+                    }
                 }
+                // tutaj
+                if (gameOver(board.getBoard()))
+                    break;
+                UserDialogs.printBoard(board.getBoard());
             }
-            // tutaj
-            UserDialogs.gameOver(board.getBoard());
-            UserDialogs.printBoard(board.getBoard());
         }
     }
 }

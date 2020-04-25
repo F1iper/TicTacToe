@@ -1,7 +1,6 @@
 package TicTacToe;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserDialogs {
@@ -77,18 +76,45 @@ public class UserDialogs {
         System.out.println("You have to choose empty field");
     }
 
-    public static boolean gameOver(char[][] board, char symbol) {
+    public static boolean gameOver(char[][] board) {
 
-        if (board[0][1] != ' ' && board[0][1] == board[0][5] && board[0][5] == board[0][9]) return true;
-        else if (board[2][1] != ' ' && board[2][1] == board[2][5] && board[2][5] == board[2][9]) return true;
-        else if (board[4][1] == 'x' && board[4][5] == 'x' && board[4][9] == 'x') return true;
+        boolean topRow = (board[0][1] != ' ' && board[0][1] == board[0][5] && board[0][5] == board[0][9]);
+        boolean middleRow = (board[2][1] != ' ' && board[2][1] == board[2][5] && board[2][5] == board[2][9]);
+        boolean bottomRow = (board[4][1] != ' ' && board[4][1] == board[4][5] && board[4][5] == board[4][9]);
 
-        else if (board[0][1] == 'x' && board[2][1] == 'x' && board[4][1] == 'x') return true;
-        else if (board[0][5] == 'x' && board[2][5] == 'x' && board[4][5] == 'x') return true;
-        else if (board[0][9] == 'x' && board[2][9] == 'x' && board[4][9] == 'x') return true;
+        boolean leftColumn = (board[0][1] != ' ' && board[0][1] == board[2][1] && board[2][1] == board[4][1]);
+        boolean middleColumn = (board[0][5] != ' ' && board[0][5] == board[2][5] && board[2][5] == board[4][5]);
+        boolean rightColumn = (board[0][9] != ' ' && board[0][9] == board[2][9] && board[2][9] == board[4][9]);
 
-        else if (board[0][1] == 'x' && board[2][5] == 'x' && board[4][9] == 'x') return true;
-        else if (board[4][1] == 'x' && board[2][5] == 'x' && board[0][9] == 'x') return true;
-        return false;
+        boolean diagonal1 = (board[0][1] != ' ' && board[0][1] == board[2][5] && board[2][5] == board[4][9]);
+        boolean diagonal2 = (board[4][1] != ' ' && board[4][1] == board[2][5] && board[2][5] == board[0][9]);
+
+        return topRow || middleRow || bottomRow || leftColumn || middleColumn || rightColumn || diagonal1 || diagonal2;
+    }
+
+    public static String displayWinner(String user) {
+        if (user.equals(Board.PLAYER))
+            return "You win the game!";
+        else if (user.equals(Board.PC))
+            return "PC is the winner!";
+        else
+            return "";
+    }
+
+    public static boolean restartGame() {
+        while (true) {
+            try {
+                System.out.println("Restart game ? Y/N");
+                Scanner input = new Scanner(System.in);
+                String choice = input.nextLine();
+                if (choice.equalsIgnoreCase("y")) {
+                    return true;
+                } else if (choice.equalsIgnoreCase("n")) {
+                    return false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Wrong input, try again.");
+            }
+        }
     }
 }
