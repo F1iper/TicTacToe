@@ -1,6 +1,5 @@
 package TicTacToe;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserDialogs {
@@ -49,8 +48,6 @@ public class UserDialogs {
                 System.out.println("Enter at least 3 characters");
             } else {
                 return name;
-//                System.out.println("Hi " + name);
-//                break;
             }
         }
     }
@@ -94,13 +91,9 @@ public class UserDialogs {
     }
 
     public static boolean isBoardFull(char[][] board) {
-        if ((board[0][1] != ' ' && board[0][5] != ' ' && board[0][9] != ' ' && board[2][1] != ' ' &&
+        return board[0][1] != ' ' && board[0][5] != ' ' && board[0][9] != ' ' && board[2][1] != ' ' &&
                 board[2][5] != ' ' && board[2][9] != ' ' && board[4][1] != ' ' &&
-                board[4][5] != ' ' && board[4][9] != ' ')) {
-            System.out.println("It's a Tie");
-            return true;
-        } else
-            return false;
+                board[4][5] != ' ' && board[4][9] != ' ';
     }
 
     public static void displayWinner(String user) {
