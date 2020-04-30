@@ -13,7 +13,7 @@ public class Game {
         this.rounds = rounds;
     }
 
-    public void play() throws Exception {
+    public void play() {
         UserDialogs.displayGreetings(name);
         UserDialogs.showExampleBoard();
         Board board = new Board();
