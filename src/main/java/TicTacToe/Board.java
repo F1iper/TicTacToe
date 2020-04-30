@@ -10,16 +10,16 @@ public class Board {
             {'-', '-', '-', '+', '-', '-', '-', '+', '-', '-', '-'},
             {' ', ' ', ' ', '|', ' ', ' ', ' ', '|', ' ', ' ', ' '}};
 
-    public boolean placePiece(int pos, String user) throws Exception {
-        while (true) {
-            char symbol = ' ';
-            if (fieldIsNotEmpty(pos))
-                return false;
-            if (user.equals(PLAYER))
-                symbol = 'x';
-            else if (user.equals(PC))
-                symbol = 'o';
+    public boolean placePiece(int pos, String user) {
+        char symbol = ' ';
+        if (fieldIsNotEmpty(pos))
+            return false;
+        if (user.equals(PLAYER))
+            symbol = 'x';
+        else if (user.equals(PC))
+            symbol = 'o';
 
+        while (true) {
             switch (pos) {
                 case 1:
                     board[0][1] = symbol;
@@ -49,24 +49,25 @@ public class Board {
                     board[4][9] = symbol;
                     break;
                 default:
-                    throw new Exception("Unknown player.");
+                    return false;
             }
-            return true;
+            break;
+        }
+        return true;
+    }
+
+        private boolean fieldIsNotEmpty ( int pos){
+            int row = (pos - 1) / 3;
+            int col = pos % 3 - 1;
+
+            if (pos == 3 || pos == 6 || pos == 9)
+                return board[row * 2][col * (-9)] != ' ';
+            else if (pos == 1 || pos == 2 || pos == 4 || pos == 5 || pos == 7 || pos == 8)
+                return board[row * 2][col * 4 + 1] != ' ';
+            return false;
+        }
+
+        public char[][] getBoard () {
+            return board;
         }
     }
-
-    private boolean fieldIsNotEmpty(int pos){
-        int row = (pos - 1) / 3;
-        int col = pos % 3 - 1;
-
-        if (pos == 3 || pos == 6)
-            return board[row * 2][col * (-9)] != ' ';
-        else if (pos == 9)
-            return board[row * 2][col * (-8)] != ' ';
-        else return board[row * 2][col * 4 + 1] != ' ';
-    }
-
-    public char[][] getBoard() {
-        return board;
-    }
-}

@@ -1,6 +1,5 @@
 package TicTacToe;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserDialogs {
@@ -49,8 +48,6 @@ public class UserDialogs {
                 System.out.println("Enter at least 3 characters");
             } else {
                 return name;
-//                System.out.println("Hi " + name);
-//                break;
             }
         }
     }
@@ -89,10 +86,14 @@ public class UserDialogs {
         boolean diagonal1 = (board[0][1] != ' ' && board[0][1] == board[2][5] && board[2][5] == board[4][9]);
         boolean diagonal2 = (board[4][1] != ' ' && board[4][1] == board[2][5] && board[2][5] == board[0][9]);
 
-        if (topRow || middleRow || bottomRow || leftColumn || middleColumn || rightColumn || diagonal1 || diagonal2)
-            return true;
-        else
-            return false;
+        return topRow || middleRow || bottomRow || leftColumn || middleColumn
+                || rightColumn || diagonal1 || diagonal2;
+    }
+
+    public static boolean isBoardFull(char[][] board) {
+        return board[0][1] != ' ' && board[0][5] != ' ' && board[0][9] != ' ' && board[2][1] != ' ' &&
+                board[2][5] != ' ' && board[2][9] != ' ' && board[4][1] != ' ' &&
+                board[4][5] != ' ' && board[4][9] != ' ';
     }
 
     public static void displayWinner(String user) {
@@ -100,20 +101,19 @@ public class UserDialogs {
             System.out.println("You win the game!");
         else if (user.equals(Board.PC))
             System.out.println("PC win the game!");
-        else
-            System.out.println("It's a tie!");
     }
 
     public static boolean restartGame() {
-        try {
+        while (true) {
             System.out.println("Restart game ?  Y/N");
             Scanner input = new Scanner(System.in);
             String result = input.nextLine();
-            if (result.equalsIgnoreCase("y")) return true;
-            else if (result.equalsIgnoreCase("n")) return false;
-        } catch (Exception e) {
-            System.out.println("Wrong input");
-
+            if (result.equalsIgnoreCase("n"))
+                break;
+            else if (result.equalsIgnoreCase("y"))
+                return true;
+            else
+                System.out.println("Wrong input");
         }
         return false;
     }
