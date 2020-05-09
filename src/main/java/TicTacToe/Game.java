@@ -1,67 +1,57 @@
 package TicTacToe;
 
-import java.util.Random;
-
-import static TicTacToe.UserDialogs.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class Game {
-    private final String name;
-    private final int rounds;
+    private final GridPane gridPane;
+    private final Board board;
+    private String player = Board.PLAYER;
 
-    public Game(String name, int rounds) {
-        this.name = name;
-        this.rounds = rounds;
+    public Game(GridPane gridPane, Board board) {
+        this.gridPane = gridPane;
+        this.board = board;
     }
 
-    public void play() {
-        UserDialogs.displayGreetings(name);
-        UserDialogs.showExampleBoard();
-        Board board = new Board();
-        Random rnd = new Random();
-        while (true) {
-            while (true) {
-                try {
-                    int playerPos = UserDialogs.getPosition();
-                    if (board.placePiece(playerPos, Board.PLAYER))
-                        break;
-                    UserDialogs.displayWrongNumber();
-                } catch (Exception e) {
-                    System.out.println("Wrong input, try again.");
-                }
+    public void doClick(int x, int y) {
+        boolean isMove = board.placePiece(x, y, player);
+        if (isMove) {
+            player = switchPlayer(player);
+            display();
+            if(board.gameOver()){
+                // todo : display game over msg
             }
-            if (!gameOver(board.getBoard()) && isBoardFull(board.getBoard())) {
-                System.out.println("It's a tie!");
-                if (restartGame())
-                    play();
-            } else if (gameOver(board.getBoard())) {
-                UserDialogs.printBoard(board.getBoard());
-                UserDialogs.displayWinner(Board.PLAYER);
-                if (restartGame())
-                    play();
-                else
-                    System.exit(0);
-            }
-            while (true) {
-                int pcPos = rnd.nextInt(9) + 1;
-                if (board.placePiece(pcPos, Board.PC))
-                    break;
-            }
-            if (!gameOver(board.getBoard()) && isBoardFull(board.getBoard())) {
-                System.out.println("It's a tie!");
-                if (restartGame())
-                    play();
-                else
-                    System.exit(0);
-
-            } else if (gameOver(board.getBoard())) {
-                UserDialogs.printBoard(board.getBoard());
-                UserDialogs.displayWinner(Board.PC);
-                if (restartGame())
-                    play();
-                else
-                    System.exit(0);
-            }
-            UserDialogs.printBoard(board.getBoard());
         }
+    }
+
+    public void display() {
+        gridPane.getChildren().clear();
+        for (int col = 0; col < 3; col++) {
+            for (int row = 0; row < 3; row++) {
+                char figure = board.getPiece(col, row);
+                Rectangle r = new Rectangle(200, 200, null);
+                r.setStroke(Color.BLACK);
+                gridPane.add(r, row, col);
+
+                Text text = new Text(getSymbol(figure));
+                text.setFont(Font.font(80));
+                gridPane.add(text, row, col);
+            }
+        }
+    }
+
+    private String getSymbol(char figure) {
+        switch(figure){
+            case 'x': return "x";
+            case 'o': return "O";
+            default: return " ";
+        }
+    }
+
+    private String switchPlayer(String player) {
+        return player.equals(Board.PLAYER) ? Board.PC : Board.PLAYER;
     }
 }

@@ -9,7 +9,7 @@ public class Runner {
 
         String name = getName();
         int rounds = getRounds();
-        Game game = new Game(name, rounds);
-        game.play();
+        TextGame textGame = new TextGame(name, rounds);
+        textGame.play();
     }
 }
