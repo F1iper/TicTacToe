@@ -93,7 +93,6 @@ public class Board {
         return placePiece(pos, player);
     }
 
-
     public char getPiece(int col, int row) {
         int pos = row * 3 + col + 1;
         switch (pos) {

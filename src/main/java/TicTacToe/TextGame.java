@@ -2,7 +2,8 @@ package TicTacToe;
 
 import java.util.Random;
 
-import static TicTacToe.UserDialogs.*;
+import static TicTacToe.UserDialogs.isBoardFull;
+import static TicTacToe.UserDialogs.restartGame;
 
 public class TextGame {
     private final String name;
